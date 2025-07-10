@@ -1,0 +1,19 @@
+{
+    "name": "menyong-menying/php-kucil-utilities-mobject",
+    "type": "library",
+    "authors": [
+        {
+            "name": "MenyongMenying",
+            "email": "menyongmenying.main@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "MenyongMenying\\MLibrary\\Kucil\\Utilities\\MObject\\": "./src/"
+        }
+    },
+    "require": {
+        "menyong-menying/php-kucil-utilities-marray": "dev-main"
+    }
+}
