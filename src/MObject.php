@@ -78,45 +78,67 @@ final class MObject
     }
 
     /**
-     * Menggabungkan beberapa objek.
-     * @param  mixed ...$object Objek-objek yang akan digabungkan. 
-     * @return object           Hasil penggabungan object.
+     * Menggabungkan beberapa objek menjadi satu.
+     * Setiap properti dengan kunci yang sama akan ditimpa oleh yang lebih akhir.
+     *
+     * @param  object ...$object Objek-objek yang akan digabungkan.
+     * @return object            Objek hasil penggabungan.
      */
-    public function merge(object ...$object) :object
+    public function merge(object ...$object): object
     {
-        return $this->mArray->convertToObject($this->mArray->merge(...($this->convertToArray(...$object))));
+        $arrays = array_map([$this, 'convertToArray'], $object);
+        return $this->mArray->convertToObject(
+            $this->mArray->merge(...$arrays)
+        );
     }
 
     /**
-     * Menggabungkan beberapa objek.
-     * @param  mixed ...$object  Objek-objek yang akan digabungkan. 
-     * @return object            Hasil penggabungan objek.
+     * Menggabungkan beberapa objek secara rekursif.
+     * Jika ada properti bertipe array pada key yang sama, isinya juga akan digabung.
+     *
+     * @param  object ...$object Objek-objek yang akan digabungkan.
+     * @return object            Objek hasil penggabungan rekursif.
      */
-    public function mergeRecursive(object ...$object) :object
+    public function mergeRecursive(object ...$object): object
     {
-        return $this->mArray->convertToObject($this->mArray->mergeRecursive(...($this->convertToArray(...$object))));
+        $arrays = array_map([$this, 'convertToArray'], $object);
+        return $this->mArray->convertToObject(
+            $this->mArray->mergeRecursive(...$arrays)
+        );
     }
 
     /**
-     * Undocumented function
-     * @param  object $objectA    
-     * @param  object ...$objectB 
-     * @return object            
+     * Mengganti nilai properti dari objek A dengan nilai dari objek B, C, dst.
+     * Mirip array_replace() tetapi untuk objek.
+     *
+     * @param  object $objectA        Objek utama yang akan digantikan nilainya.
+     * @param  object ...$objectB     Objek-objek yang akan menggantikan nilai.
+     * @return object                 Objek hasil penggantian.
      */
-    public function replace(object $objectA, object ...$objectB) :object
+    public function replace(object $objectA, object ...$objectB): object
     {
-        return $this->mArray->convertToObject($this->mArray->replace($this->convertToArray($objectA), ...($this->convertToArray(...$objectB))));
+        $arrayA = $this->convertToArray($objectA);
+        $arraysB = array_map([$this, 'convertToArray'], $objectB);
+        return $this->mArray->convertToObject(
+            $this->mArray->replace($arrayA, ...$arraysB)
+        );
     }
 
     /**
-     * Undocumented function
-     * @param  object $objectA    
-     * @param  object ...$objectB 
-     * @return object            
+     * Mengganti nilai properti dari objek A dengan nilai dari objek B, C, dst secara rekursif.
+     * Cocok untuk properti bertipe array atau objek bertingkat.
+     *
+     * @param  object $objectA        Objek utama yang akan digantikan nilainya.
+     * @param  object ...$objectB     Objek-objek yang akan menggantikan nilai.
+     * @return object                 Objek hasil penggantian rekursif.
      */
-    public function replaceRecursive(object $objectA, object ...$objectB) :object
+    public function replaceRecursive(object $objectA, object ...$objectB): object
     {
-        return $this->mArray->convertToObject($this->mArray->replaceRecursive($this->convertToArray($objectA), ...($this->convertToArray(...$objectB))));
+        $arrayA = $this->convertToArray($objectA);
+        $arraysB = array_map([$this, 'convertToArray'], $objectB);
+        return $this->mArray->convertToObject(
+            $this->mArray->replaceRecursive($arrayA, ...$arraysB)
+        );
     }
 
     /**
@@ -202,12 +224,45 @@ final class MObject
     }
 
     /**
-     * Mengubah objek menjadi array.
+     * Mengubah objek menjadi array secara rekursif.
+     * Mengabaikan properti private/protected prefix.
      * @param  object $object Objek yang akan diubah.
-     * @return array          Array dari $object.
+     * @return array          Array dari objek tersebut.
      */
-    public function convertToArray(object $object) :array
+    public function convertToArray(object $object): array
     {
-        return (array) $object;
+        $result = [];
+        foreach ((array) $object as $key => $value) {
+            $cleanKey = is_string($key) ? preg_replace('/^\x00.+\x00/', '', $key) : $key;
+            if (is_object($value)) {
+                $result[$cleanKey] = $this->convertToArray($value);
+            } elseif (is_array($value)) {
+                $result[$cleanKey] = $this->convertArrayRecursive($value);
+            } else {
+                $result[$cleanKey] = $value;
+            }
+        }
+        return $result;
     }
+
+    /**
+     * Mengubah isi array yang mungkin mengandung objek menjadi array secara rekursif.
+     * @param  array $array
+     * @return array
+     */
+    protected function convertArrayRecursive(array $array): array
+    {
+        $result = [];
+        foreach ($array as $key => $value) {
+            if (is_object($value)) {
+                $result[$key] = $this->convertToArray($value);
+            } elseif (is_array($value)) {
+                $result[$key] = $this->convertArrayRecursive($value);
+            } else {
+                $result[$key] = $value;
+            }
+        }
+        return $result;
+    }
+
 }
