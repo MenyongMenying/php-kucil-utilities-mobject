@@ -1,0 +1,21 @@
+{
+    "name": "menyong-menying/kucil-utilities-mobject",
+    "type": "library",
+    "authors": [
+        {
+            "name": "MenyongMenying",
+            "email": "menyongmenying.main@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "version": "0.0.1",
+    "autoload": {
+        "psr-4": {
+            "MenyongMenying\\MLibrary\\Kucil\\Utilities\\MObject\\": "./src/"
+        }
+    },
+    "require": {
+        "menyong-menying/kucil-utilities-marray": "v0.0.1",
+        "menyong-menying/kucil-utilities-data": "v0.0.1"
+    }
+}

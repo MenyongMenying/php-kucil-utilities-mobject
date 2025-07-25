@@ -1,0 +1,88 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "5321e1d6cd5d954dfb17e0206184c9f1",
+    "packages": [
+        {
+            "name": "menyong-menying/kucil-utilities-data",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MenyongMenying/php-kucil-utilities-data.git",
+                "reference": "d74bd88ee0e38bb313ebcf9ea99093bba329750d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MenyongMenying/php-kucil-utilities-data/zipball/d74bd88ee0e38bb313ebcf9ea99093bba329750d",
+                "reference": "d74bd88ee0e38bb313ebcf9ea99093bba329750d",
+                "shasum": ""
+            },
+            "type": "plugin",
+            "autoload": {
+                "psr-4": {
+                    "MenyongMenying\\MLibrary\\Kucil\\Utilities\\Data\\": "./src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "MenyongMenying",
+                    "email": "menyongmenying.main@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/MenyongMenying/php-kucil-utilities-data/issues",
+                "source": "https://github.com/MenyongMenying/php-kucil-utilities-data/tree/v0.0.1"
+            },
+            "time": "2025-07-25T07:11:18+00:00"
+        },
+        {
+            "name": "menyong-menying/kucil-utilities-marray",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MenyongMenying/php-kucil-utilities-marray.git",
+                "reference": "f372d841b7084a5d751847c50bff1a6acc4d1b61"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MenyongMenying/php-kucil-utilities-marray/zipball/f372d841b7084a5d751847c50bff1a6acc4d1b61",
+                "reference": "f372d841b7084a5d751847c50bff1a6acc4d1b61",
+                "shasum": ""
+            },
+            "require": {
+                "menyong-menying/kucil-utilities-data": "v0.0.1"
+            },
+            "type": "plugin",
+            "autoload": {
+                "psr-4": {
+                    "MenyongMenying\\MLibrary\\Kucil\\Utilities\\MArray\\": "./src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "MenyongMenying",
+                    "email": "menyongmenying.main@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/MenyongMenying/php-kucil-utilities-marray/issues",
+                "source": "https://github.com/MenyongMenying/php-kucil-utilities-marray/tree/v0.0.1"
+            },
+            "time": "2025-07-25T07:14:47+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {},
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
+}
